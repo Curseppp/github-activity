@@ -11,11 +11,20 @@ def format_datetime(raw_datetime: str) -> str:
 
 
 def format_event(event: dict) -> str:
-    event_type = format_type(event["type"])
+    event_type = event["type"]
     repo_name = event["repo"]["name"]
     created_at = format_datetime(event["created_at"])
+    main_text = ""
 
-    return f"{event_type} by {repo_name} at {created_at}"
+    if event_type == "PushEvent":
+        commits = event["payload"].get("commits")
+
+        if commits is None:
+            main_text = f"\nPushed 1 commit to {repo_name}"
+        else:
+            main_text = f"\nPushed {len(commits)} commit(s) to {repo_name}"
+
+    return f"{format_type(event_type)} by {repo_name} at {created_at}{main_text}"
 
 
 def format_type(type: str) -> str:
