@@ -5,7 +5,9 @@ def format_datetime(raw_datetime: str) -> str:
     created_at = datetime.fromisoformat(raw_datetime)
     timezone_created_at = created_at.astimezone()
 
-    return timezone_created_at.strftime(f"%Y-%m-%d %H:%M {timezone_created_at.tzname()}")
+    return timezone_created_at.strftime(
+        f"%Y-%m-%d %H:%M {timezone_created_at.tzname()}"
+    )
 
 
 def format_event(event: dict) -> str:

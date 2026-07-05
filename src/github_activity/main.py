@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import typer
 from rich.console import Console
 
@@ -17,6 +19,12 @@ def github_activity(username: str) -> None:
     if not events:
         console.print(f"No recent public activity found for {username}")
         return
+
+    events = sorted(
+        events,
+        key=lambda event: datetime.fromisoformat(event["created_at"]),
+        reverse=True,
+    )
 
     console.print(
         gradient_text(
