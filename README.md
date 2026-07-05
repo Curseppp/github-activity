@@ -24,3 +24,11 @@ Install dependencies with uv:
 ```bash
 uv sync
 ```
+
+## Usage
+Select the user whose public activity you want to view and enter their name as a command line parameter.
+
+For example: 
+```bash
+uv run github-activity Curseppp
+```
