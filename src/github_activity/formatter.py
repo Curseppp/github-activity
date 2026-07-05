@@ -1,14 +1,11 @@
 from datetime import datetime
-from zoneinfo import ZoneInfo
 
-
-TIMEZONE = ZoneInfo("Europe/Moscow")
 
 def format_datetime(raw_datetime: str) -> str:
-    created_at = datetime.fromisoformat(raw_datetime.replace("Z", "+00:00"))
-    moscow_created_at = created_at.astimezone(TIMEZONE)
+    created_at = datetime.fromisoformat(raw_datetime)
+    timezone_created_at = created_at.astimezone()
 
-    return moscow_created_at.strftime(f"%Y-%m-%d %H:%M {TIMEZONE}")
+    return timezone_created_at.strftime(f"%Y-%m-%d %H:%M {timezone_created_at.tzname()}")
 
 
 def format_event(event: dict) -> str:
