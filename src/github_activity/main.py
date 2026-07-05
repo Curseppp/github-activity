@@ -1,27 +1,31 @@
-import json
-from urllib.request import urlopen
-from urllib.error import HTTPError
-
 import typer
+from rich.console import Console
+
+from .api import fetch_user_activity
+from .formatter import format_event
+from .style import gradient_text
 
 
 app = typer.Typer()
+console = Console()
+
 
 @app.command()
-def github_activity(username: str):
-    url = f"https://api.github.com/users/{username}/events"
+def github_activity(username: str) -> None:
+    events = fetch_user_activity(username)
 
-    try:
-        with urlopen(url) as response:
-            data = response.read()
-    except HTTPError as err:
-        if err.code == 404:
-            typer.echo(f"User {username} not found")
-            raise typer.Exit(code=1)
+    if not events:
+        console.print(f"No recent public activity found for {username}")
+        return
 
-        typer.echo(f"GitHub API error: {err.code}")
-        raise typer.Exit(code=1)
+    console.print(
+        gradient_text(
+            f"GitHub activity for {username}",
+            start=(180, 80, 255),
+            end=(80, 200, 255),
+        ),
+        justify="center",
+    )
 
-    events = json.loads(data)
-
-    typer.echo(events)
+    for event in events:
+        console.print(format_event(event), highlight=False)
