@@ -10,6 +10,9 @@ This project is based on the [roadmap.sh GitHub User Activity](https://roadmap.s
 - Display activity in a readable, colored CLI format
 - Format common GitHub events into human-friendly messages
 - Show activity dates in your local timezone
+- Limit the number of displayed events
+- Filter activity by GitHub event type
+- Use a GitHub token for authenticated API requests
 - Handle invalid usernames and API errors
 - Use the public GitHub Events API
 - Built with Python and Typer
@@ -40,6 +43,24 @@ For example:
 uv run github-activity Curseppp
 ```
 
+Limit the number of displayed events:
+
+```bash
+uv run github-activity Curseppp --limit 5
+```
+
+Filter activity by event type:
+
+```bash
+uv run github-activity Curseppp --event-type PushEvent
+```
+
+You can combine both options:
+
+```bash
+uv run github-activity Curseppp --limit 10 --event-type IssuesEvent
+```
+
 Example output:
 
 ```text
@@ -50,6 +71,26 @@ Example output:
 ```
 
 The tool reads recent public events from GitHub. Private activity is not available through the public events endpoint.
+
+When an event type is selected, the CLI can scan multiple GitHub Events API pages to find matching events, then display up to the requested limit.
+
+## GitHub Token
+
+The CLI can use a GitHub token for authenticated API requests and higher rate limits.
+
+Run the setup command and paste your token when prompted:
+
+```bash
+uv run github-activity setup
+```
+
+This creates or updates a local `.env` file with:
+
+```text
+GITHUB_TOKEN=your-token
+```
+
+The `.env` file is ignored by Git and should not be committed.
 
 ## Supported Events
 
