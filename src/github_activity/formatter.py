@@ -2,6 +2,8 @@ from datetime import datetime
 
 from rich.text import Text
 
+from .events import EventType
+
 
 def format_datetime(raw_datetime: str) -> str:
     created_at = datetime.fromisoformat(raw_datetime)
@@ -247,23 +249,23 @@ def format_issues_event(payload) -> Text:
 
 def format_event_message(event_type: str, payload: dict) -> Text:
     match event_type:
-        case "PushEvent":
+        case EventType.PUSH:
             return format_push_event(payload)
-        case "DeleteEvent":
+        case EventType.DELETE:
             return format_delete_event(payload)
-        case "CreateEvent":
+        case EventType.CREATE:
             return format_create_event(payload)
-        case "PullRequestEvent":
+        case EventType.PULL_REQUEST:
             return format_pull_request_event(payload)
-        case "PullRequestReviewEvent":
+        case EventType.PULL_REQUEST_REVIEW:
             return format_pr_review_event(payload)
-        case "PullRequestReviewCommentEvent":
+        case EventType.PULL_REQUEST_REVIEW_COMMENT:
             return format_pr_review_comment_event(payload)
-        case "IssuesEvent":
+        case EventType.ISSUES:
             return format_issues_event(payload)
-        case "IssueCommentEvent":
+        case EventType.ISSUE_COMMENT:
             return format_issue_comment_event(payload)
-        case "WatchEvent":
+        case EventType.WATCH:
             return format_watch_event(payload)
 
         case _:
