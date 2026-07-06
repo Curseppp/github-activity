@@ -1,11 +1,10 @@
-from datetime import datetime
-
 import typer
 from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
 
 from .api import fetch_user_activity
+from .events import parse_event_datetime
 from .formatter import format_event
 from .style import gradient_text
 
@@ -25,7 +24,7 @@ def github_activity(username: str) -> None:
 
         events = sorted(
             events,
-            key=lambda event: datetime.fromisoformat(event["created_at"]),
+            key=parse_event_datetime,
             reverse=True,
         )
 
