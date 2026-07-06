@@ -2,10 +2,6 @@ from datetime import datetime
 from enum import Enum
 
 
-def parse_event_datetime(event: dict) -> datetime:
-    return datetime.fromisoformat(event["created_at"])
-
-
 class EventType(str, Enum):
     PUSH = "PushEvent"
     DELETE = "DeleteEvent"
@@ -16,3 +12,15 @@ class EventType(str, Enum):
     ISSUES = "IssuesEvent"
     ISSUE_COMMENT = "IssueCommentEvent"
     WATCH = "WatchEvent"
+
+
+def parse_event_datetime(event: dict) -> datetime:
+    return datetime.fromisoformat(event["created_at"])
+
+
+def filter_events_by_type(events: list[dict], event_type: EventType | None) -> list[dict]:
+    if event_type is None:
+        return events
+
+    return [event for event in events if event["type"] == event_type]
+
