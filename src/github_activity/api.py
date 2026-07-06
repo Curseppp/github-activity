@@ -25,9 +25,10 @@ def get_headers() -> dict[str, str]:
     return headers
 
 
-def fetch_user_activity(username: str) -> list[dict]:
+def fetch_user_activity(username: str, limit: int) -> list[dict]:
+    params = urlencode({"per_page": limit})
     request = Request(
-        f"https://api.github.com/users/{username}/events`",
+        f"https://api.github.com/users/{username}/events?{params}",
         headers=get_headers(),
     )
     try:

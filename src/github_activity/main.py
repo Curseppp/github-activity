@@ -14,9 +14,19 @@ console = Console()
 
 
 @app.command()
-def github_activity(username: str) -> None:
+def github_activity(
+    username: str,
+    limit: int = typer.Option(
+        10,
+        "--limit",
+        "-l",
+        min=1,
+        max=100,
+        help="Number of events to fetch. GitHub allows up to 100 events per page.",
+    ),
+) -> None:
     with console.status("[bold green]Fetching GitHub activity..."):
-        events = fetch_user_activity(username)
+        events = fetch_user_activity(username, limit)
 
         if not events:
             console.print(f"No recent public activity found for {username}")
