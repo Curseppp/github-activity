@@ -70,6 +70,18 @@ Example output:
 ✎ Commented on issue #7 in owner/repo at 2026-07-04 17:05 MSK
 ```
 
+## Screenshots
+
+```bash
+uv run github-activity narumiruna
+```
+![GitHub Activity CLI output](docs/example.jpg)
+
+```bash
+uv run github-activity narumiruna  --event-type WatchEvent  --limit 4
+```
+![GitHub Activity CLI output](docs/example2.jpg)
+
 The tool reads recent public events from GitHub. Private activity is not available through the public events endpoint.
 
 When an event type is selected, the CLI can scan multiple GitHub Events API pages to find matching events, then display up to the requested limit.
