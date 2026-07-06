@@ -102,8 +102,6 @@ This creates or updates a local `.env` file with:
 GITHUB_TOKEN=your-token
 ```
 
-The `.env` file is ignored by Git and should not be committed.
-
 ## Supported Events
 
 | GitHub event | Displayed as | Data used |
